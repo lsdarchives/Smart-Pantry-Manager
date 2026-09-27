@@ -50,10 +50,16 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
         holder.itemView.setOnClickListener(view -> listener.onItemClick(item));
     }
 
+    public void updateItems(List<PantryItem> pantryItems) {
+        this.pantryItems = pantryItems;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return pantryItems.size();
     }
+
 
     public static class PantryViewHolder extends RecyclerView.ViewHolder {
         TextView txtIngredientName;

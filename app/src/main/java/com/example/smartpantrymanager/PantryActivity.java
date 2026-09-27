@@ -3,6 +3,7 @@ package com.example.smartpantrymanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class PantryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PantryAdapter adapter;
     private DatabaseHelper dbHelper;
+    private TextView emptyPantryText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +30,19 @@ public class PantryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pantry);
 
         recyclerView = findViewById(R.id.recyclerPantry);
+        emptyPantryText = findViewById(R.id.emptyPantryText);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dbHelper = new DatabaseHelper(this);
+
+        adapter = new PantryAdapter(new java.util.ArrayList<>(), item -> {
+                    Intent intent = new Intent(PantryActivity.this, AddEditActivity.class);
+                    intent.putExtra("itemId", item.getId());
+                    startActivity(intent);
+        });
+
+        recyclerView.setAdapter(adapter);
 
         Button addIngredientBtn = findViewById(R.id.addIngredientBtn);
 
@@ -51,12 +62,14 @@ public class PantryActivity extends AppCompatActivity {
     private void loadPantryItems() {
         List<PantryItem> pantryItems = dbHelper.getAllPantryItems();
 
-        adapter = new PantryAdapter(pantryItems, item -> {
-            Intent intent = new Intent(PantryActivity.this, AddEditActivity.class);
+        adapter.updateItems(pantryItems);
 
-            intent.putExtra("itemId", item.getId());
-            startActivity(intent);
-        });
-        recyclerView.setAdapter(adapter);
+        if (pantryItems.isEmpty()) {
+            emptyPantryText.setVisibility(TextView.VISIBLE);
+            recyclerView.setVisibility(RecyclerView.GONE);
+        } else {
+            emptyPantryText.setVisibility(TextView.GONE);
+            recyclerView.setVisibility(RecyclerView.VISIBLE);
+        }
     }
 }

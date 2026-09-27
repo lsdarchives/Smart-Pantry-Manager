@@ -86,6 +86,17 @@
             android:paddingTop="8dp"
             android:paddingBottom="16dp" />
 
+        <TextView
+            android:id="@+id/emptyPantryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:gravity="center"
+            android:text="Your pantry is empty.\nAdd some ingredients to get started!"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/body_size"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <!-- Bottom Navigation -->

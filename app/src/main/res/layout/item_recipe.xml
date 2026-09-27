@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/card_padding">
+
+            <TextView
+                android:id="@+id/txtRecipeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chicken Pasta"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/section_title_size"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/txtRecipeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="5 required ingredients"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/caption_size"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/viewRecipeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@drawable/rounded_recipe_btn"
+                android:text="View Recipe →"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

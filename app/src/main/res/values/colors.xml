@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary / Pantry -->
+    <color name="primary_green">#2E7D32</color>
+    <color name="light_green">#E8F5E9</color>
+
+    <!-- Recipes -->
+    <color name="recipe_orange">#F57C00</color>
+    <color name="light_orange">#FFF3E0</color>
+
+    <!-- Expiry / Attention -->
+    <color name="expiry_yellow">#FBC02D</color>
+    <color name="light_yellow">#FFF8E1</color>
+
+    <!-- Errors / Expired / Delete -->
+    <color name="error_red">#D32F2F</color>
+    <color name="light_red">#FFEBEE</color>
+
+    <!-- General UI -->
+    <color name="background">#F8FAF5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_primary">#1B1B1B</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="border">#E0E5DC</color>
+
 </resources>

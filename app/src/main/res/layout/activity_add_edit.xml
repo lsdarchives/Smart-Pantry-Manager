@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AddEditActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/screen_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/backIngredientBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="←"
+                android:textColor="@color/primary_green"
+                android:textSize="28sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/ingredientTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Ingredient"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/title_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="Add something to your pantry."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/body_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/spacing_xlarge">
+
+            <EditText
+                android:id="@+id/ingredientNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/rounded_input"
+                android:hint="Ingredient name"
+                android:padding="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/quantityInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@drawable/rounded_input"
+                android:hint="Quantity"
+                android:padding="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/unitInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@drawable/rounded_input"
+                android:hint="Unit (kg, g, pieces...)"
+                android:padding="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/expiryDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@drawable/rounded_input"
+                android:hint="Expiry date (optional)"
+                android:padding="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/saveIngredientBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_xlarge"
+                android:background="@drawable/rounded_btn"
+                android:text="Save Ingredient"
+                android:textColor="@color/white"
+                android:textSize="@dimen/body_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

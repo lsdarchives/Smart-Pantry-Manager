@@ -4,6 +4,11 @@ import android.content.*;
 import android.database.*;
 import android.database.sqlite.*;
 
+import com.example.smartpantrymanager.models.PantryItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SmartPantry.db";
@@ -44,10 +49,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert("PANTRY", null, values);
     }
 
-    public Cursor getAllPantryItems(){
+    public List<PantryItem> getAllPantryItems(){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        return db.rawQuery("SELECT * FROM PANTRY", null);
+        List<PantryItem> pantryItems = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM PANTRY", null);
+
+        if(cursor.moveToFirst()){
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                double quantity = cursor.getDouble(cursor.getColumnIndexOrThrow("quantity"));
+                String unit = cursor.getString(cursor.getColumnIndexOrThrow("unit"));
+                String expiryDate = cursor.getString(cursor.getColumnIndexOrThrow("expiryDate"));
+
+                PantryItem item = new PantryItem(id,name,quantity,unit,expiryDate);
+
+                pantryItems.add(item);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        return pantryItems;
     }
 
     public int updatePantryItem(int id, String name, double quantity, String unit, String expiryDate){

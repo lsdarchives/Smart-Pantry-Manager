@@ -73,6 +73,17 @@
             android:clipToPadding="false"
             android:paddingBottom="16dp" />
 
+        <TextView
+            android:id="@+id/emptyRecipesText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:gravity="center"
+            android:text="No recipes can be made with your current pantry."
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/body_size"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <LinearLayout

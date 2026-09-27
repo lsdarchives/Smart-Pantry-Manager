@@ -122,6 +122,16 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/body_size" />
 
+            <Button
+                android:id="@+id/deleteIngredientBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/rounded_btn"
+                android:text="Delete Ingredient"
+                android:textColor="@color/white"
+                android:textSize="@dimen/body_size"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </LinearLayout>

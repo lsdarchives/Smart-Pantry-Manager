@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addPantryItem(String name, int quantity, String unit, String expiryDate){
+    public long addPantryItem(String name, double quantity, String unit, String expiryDate){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -74,6 +74,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return pantryItems;
     }
 
+    public PantryItem getPantryItemById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM PANTRY WHERE id = ?", new String[]{String.valueOf(id)});
+
+        PantryItem item = null;
+
+        if (cursor.moveToFirst()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            double quantity = cursor.getDouble(cursor.getColumnIndexOrThrow("quantity"));
+            String unit = cursor.getString(cursor.getColumnIndexOrThrow("unit"));
+            String expiryDate = cursor.getString(cursor.getColumnIndexOrThrow("expiryDate"));
+
+            item = new PantryItem(id, name, quantity, unit, expiryDate);
+        }
+        cursor.close();
+        return item;
+    }
     public int updatePantryItem(int id, String name, double quantity, String unit, String expiryDate){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -92,5 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.delete("PANTRY", "id = ?", new String[]{String.valueOf(id)});
     }
+
+
 
 }

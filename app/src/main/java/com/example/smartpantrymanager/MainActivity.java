@@ -2,13 +2,10 @@ package com.example.smartpantrymanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-
+import android.widget.*;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,18 +16,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button pantryBtn = findViewById(R.id.pantryBtn);
-        Button recipesBtn = findViewById(R.id.pantryBtn);
-        Button settingsBtn = findViewById(R.id.pantryBtn);
+        Button recipesBtn = findViewById(R.id.recipesBtn);
+        TextView settingsIcon = findViewById(R.id.settingsIcon);
 
         // Button functionality
         pantryBtn.setOnClickListener(view ->{
             Intent intent = new Intent(MainActivity.this,PantryActivity.class);
+            startActivity(intent);
         });
         recipesBtn.setOnClickListener(view ->{
             Intent intent = new Intent(MainActivity.this, SuggestedRecipesActivity.class);
+            startActivity(intent);
         });
-        settingsBtn.setOnClickListener(view ->{
+        settingsIcon.setOnClickListener(view ->{
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         });
     }
 }

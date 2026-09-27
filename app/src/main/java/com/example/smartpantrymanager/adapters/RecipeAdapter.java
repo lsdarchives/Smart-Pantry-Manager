@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.smartpantrymanager.R;
 import com.example.smartpantrymanager.RecipeActivity;
 import com.example.smartpantrymanager.database.DatabaseHelper;
@@ -19,11 +17,9 @@ import com.example.smartpantrymanager.models.Recipe;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
-
     private final List<Recipe> recipes;
     private final Context context;
     private final DatabaseHelper dbHelper;
-
 
     public RecipeAdapter(Context context, List<Recipe> recipes, DatabaseHelper dbHelper){
         this.context = context;

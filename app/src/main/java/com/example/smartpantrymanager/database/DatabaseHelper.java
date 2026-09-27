@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SmartPantry.db";
-    private static final int DATABASE_VER = 2;
+    private static final int DATABASE_VER = 3;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VER);
@@ -55,13 +55,139 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
+        if (oldVersion < 3) {
 
             db.execSQL("CREATE TABLE RECIPES (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT NOT NULL, " + "preparation TEXT NOT NULL" + ")");
             db.execSQL("CREATE TABLE RECIPE_INGREDIENTS (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "recipeId INTEGER NOT NULL, " + "ingredientName TEXT NOT NULL, " + "requiredQuantity REAL NOT NULL, " + "unit TEXT NOT NULL, " + "FOREIGN KEY(recipeId) REFERENCES RECIPES(id)" + ")");
 
             seedDefaultRecipes(db);
         }
+    }
+
+    private void updateRecipePreparations(SQLiteDatabase db) {
+
+        updatePreparation(db, "Chicken Pasta",
+                "1. Cook the pasta according to the package instructions.\n\n" +
+                        "2. Cook the chicken and onion in a pan.\n\n" +
+                        "3. Add the tomatoes and cook until softened.\n\n" +
+                        "4. Combine everything with the pasta and serve.");
+
+        updatePreparation(db, "Vegetable Stir Fry",
+                "1. Heat the oil in a pan.\n\n" +
+                        "2. Add the vegetables and onion.\n\n" +
+                        "3. Add the soy sauce.\n\n" +
+                        "4. Stir-fry until the vegetables are tender.");
+
+        updatePreparation(db, "Tomato Omelette",
+                "1. Beat the eggs in a bowl.\n\n" +
+                        "2. Add the chopped tomato and onion.\n\n" +
+                        "3. Heat oil in a pan.\n\n" +
+                        "4. Pour in the egg mixture and cook until set.");
+
+        updatePreparation(db, "Grilled Cheese Sandwich",
+                "1. Butter the bread.\n\n" +
+                        "2. Add the cheese between the slices.\n\n" +
+                        "3. Heat a pan or grill.\n\n" +
+                        "4. Grill until the bread is golden and the cheese melts.");
+
+        updatePreparation(db, "Chicken Wrap",
+                "1. Cook the chicken thoroughly.\n\n" +
+                        "2. Prepare the tortilla.\n\n" +
+                        "3. Add the chicken, lettuce, tomato and cheese.\n\n" +
+                        "4. Fold the tortilla and serve.");
+
+        updatePreparation(db, "Pancakes",
+                "1. Mix the flour, eggs, milk and sugar into a batter.\n\n" +
+                        "2. Heat a pan and add butter.\n\n" +
+                        "3. Pour a portion of batter into the pan.\n\n" +
+                        "4. Cook both sides until golden.");
+
+        updatePreparation(db, "French Toast",
+                "1. Whisk the eggs, milk and cinnamon together.\n\n" +
+                        "2. Dip each slice of bread into the mixture.\n\n" +
+                        "3. Heat butter in a pan.\n\n" +
+                        "4. Fry the bread until golden on both sides.");
+
+        updatePreparation(db, "Fried Rice",
+                "1. Cook the rice.\n\n" +
+                        "2. Cook the eggs in a pan.\n\n" +
+                        "3. Add the peas and carrot.\n\n" +
+                        "4. Add the rice and soy sauce.\n\n" +
+                        "5. Stir-fry everything together.");
+
+        updatePreparation(db, "Spaghetti Bolognese",
+                "1. Cook the spaghetti according to the package instructions.\n\n" +
+                        "2. Brown the mince with onion and garlic.\n\n" +
+                        "3. Add the tomato and simmer.\n\n" +
+                        "4. Serve the sauce with the spaghetti.");
+
+        updatePreparation(db, "Tuna Pasta",
+                "1. Cook the pasta according to the package instructions.\n\n" +
+                        "2. Drain the tuna.\n\n" +
+                        "3. Mix the tuna with mayonnaise, onion and sweetcorn.\n\n" +
+                        "4. Combine the mixture with the pasta and serve.");
+
+        updatePreparation(db, "Chicken Curry",
+                "1. Heat the oil in a pan.\n\n" +
+                        "2. Cook the onion and chicken.\n\n" +
+                        "3. Add the tomato and curry powder.\n\n" +
+                        "4. Simmer until the chicken is cooked.\n\n" +
+                        "5. Serve with rice.");
+
+        updatePreparation(db, "Beef Burger",
+                "1. Shape the beef mince into patties.\n\n" +
+                        "2. Cook the patties thoroughly.\n\n" +
+                        "3. Prepare the burger buns.\n\n" +
+                        "4. Add lettuce, tomato, onion and cheese.\n\n" +
+                        "5. Place the beef patties into the buns and serve.");
+
+        updatePreparation(db, "Potato and Egg Hash",
+                "1. Dice the potatoes and onion.\n\n" +
+                        "2. Heat oil in a pan.\n\n" +
+                        "3. Cook the potatoes and onion until golden.\n\n" +
+                        "4. Add the eggs.\n\n" +
+                        "5. Cook until the eggs are set.");
+
+        updatePreparation(db, "Vegetable Soup",
+                "1. Chop the potato, carrot and onion.\n\n" +
+                        "2. Add the vegetables, stock and mixed vegetables to a pot.\n\n" +
+                        "3. Bring the soup to a boil.\n\n" +
+                        "4. Simmer until the vegetables are tender.\n\n" +
+                        "5. Serve warm.");
+
+        updatePreparation(db, "Banana Smoothie",
+                "1. Peel the bananas.\n\n" +
+                        "2. Add the bananas, milk and honey to a blender.\n\n" +
+                        "3. Blend until smooth.\n\n" +
+                        "4. Serve immediately.");
+
+        updatePreparation(db, "Chicken and Rice",
+                "1. Cook the rice.\n\n" +
+                        "2. Cook the chicken with onion and carrot.\n\n" +
+                        "3. Add a little oil while cooking.\n\n" +
+                        "4. Cook until the chicken is thoroughly cooked.\n\n" +
+                        "5. Serve the chicken with the rice.");
+
+        updatePreparation(db, "Pasta Primavera",
+                "1. Cook the pasta according to the package instructions.\n\n" +
+                        "2. Cook the mixed vegetables.\n\n" +
+                        "3. Add the cream and parmesan.\n\n" +
+                        "4. Combine the vegetables and sauce with the pasta.\n\n" +
+                        "5. Serve warm.");
+
+        updatePreparation(db, "Bean Quesadilla",
+                "1. Prepare the tortillas.\n\n" +
+                        "2. Add the beans, cheese, tomato and onion.\n\n" +
+                        "3. Fold the tortillas.\n\n" +
+                        "4. Cook until the tortillas are crisp and the cheese melts.\n\n" +
+                        "5. Serve warm.");
+    }
+
+    private void updatePreparation(SQLiteDatabase db, String recipeName, String preparation) {
+        ContentValues values = new ContentValues();
+        values.put("preparation", preparation);
+
+        db.update("RECIPES", values, "name = ?", new String[]{recipeName});
     }
 
     private void seedDefaultRecipes(SQLiteDatabase db) {
@@ -394,6 +520,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return recipes;
+    }
+
+    public Recipe getRecipeById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM RECIPES WHERE id = ?", new String[]{String.valueOf(id)});
+
+        Recipe recipe = null;
+
+        if (cursor.moveToFirst()) {
+            int recipeId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            String preparation = cursor.getString(cursor.getColumnIndexOrThrow("preparation"));
+
+            recipe = new Recipe(recipeId, name, preparation);
+        }
+        cursor.close();
+        return recipe;
     }
 
     public List<RecipeIngredient> getRecipeIngredients(int recipeId) {

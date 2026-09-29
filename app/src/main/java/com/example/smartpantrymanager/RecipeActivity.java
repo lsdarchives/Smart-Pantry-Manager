@@ -22,6 +22,7 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ThemeManager.applySavedTheme(this);
         setContentView(R.layout.activity_recipe);
 
         recipeName = findViewById(R.id.recipeName);

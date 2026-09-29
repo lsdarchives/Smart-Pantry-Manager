@@ -1,5 +1,6 @@
 package com.example.smartpantrymanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class SuggestedRecipesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ThemeManager.applySavedTheme(this);
         setContentView(R.layout.activity_suggested_recipes);
 
         recyclerRecipes = findViewById(R.id.recyclerRecipes);
@@ -34,6 +36,25 @@ public class SuggestedRecipesActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
 
         loadSuggestedRecipes();
+
+        findViewById(R.id.navHome).setOnClickListener(view -> {
+            startActivity(new Intent(SuggestedRecipesActivity.this, MainActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.navPantry).setOnClickListener(view -> {
+            startActivity(new Intent(SuggestedRecipesActivity.this, PantryActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.navRecipes).setOnClickListener(view -> {
+            // Already on Recipes
+        });
+
+        findViewById(R.id.navSettings).setOnClickListener(view -> {
+            startActivity(new Intent(SuggestedRecipesActivity.this, SettingsActivity.class));
+            finish();
+        });
     }
 
     private void loadSuggestedRecipes() {

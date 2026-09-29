@@ -1,5 +1,6 @@
 package com.example.smartpantrymanager;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +25,8 @@ public class AddEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
+        ThemeManager.applySavedTheme(this);
         setContentView(R.layout.activity_add_edit);
 
         dbHelper = new DatabaseHelper(this);
@@ -40,8 +41,13 @@ public class AddEditActivity extends AppCompatActivity {
         ingredientNameInput = findViewById(R.id.ingredientNameInput);
         quantityInput = findViewById(R.id.quantityInput);
         unitInput = findViewById(R.id.unitInput);
-        expiryDateInput = findViewById(R.id.expiryDateInput);
+        SharedPreferences preferences = getSharedPreferences("SmartPantrySettings", MODE_PRIVATE);
+        String defaultUnit = preferences.getString("defaultUnit", "g");
 
+        if (!editMode && unitInput.getText().toString().trim().isEmpty()) {
+            unitInput.setText(defaultUnit);
+        }
+        expiryDateInput = findViewById(R.id.expiryDateInput);
         saveIngredientBtn = findViewById(R.id.saveIngredientBtn);
 
         saveIngredientBtn.setOnClickListener(view -> {

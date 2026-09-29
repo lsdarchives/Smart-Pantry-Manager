@@ -74,45 +74,80 @@ public class AddEditActivity extends AppCompatActivity {
         // Validate ingredient name
         if (name.isEmpty()) {
             ingredientNameInput.setError("Enter an ingredient name!");
+            ingredientNameInput.requestFocus();
+            return;
+        }
+
+        // Prevent excessively long ingredient names
+        if (name.length() > 50) {
+            ingredientNameInput.setError("Ingredient name is too long!");
+            ingredientNameInput.requestFocus();
             return;
         }
 
         // Validate quantity
         if (quantityText.isEmpty()) {
             quantityInput.setError("Enter a quantity!");
+            quantityInput.requestFocus();
+            return;
+        }
+
+        try {
+            quantity = Double.parseDouble(quantityText);
+        } catch (NumberFormatException e) {
+            quantityInput.setError("Enter a valid number!");
+            quantityInput.requestFocus();
+            return;
+        }
+
+        // Prevent invalid mathematical values
+        if (Double.isNaN(quantity) || Double.isInfinite(quantity)) {
+            quantityInput.setError("Enter a valid quantity!");
+            quantityInput.requestFocus();
+            return;
+        }
+
+        // Quantity must be positive
+        if (quantity <= 0) {
+            quantityInput.setError("Quantity must be greater than 0!");
+            quantityInput.requestFocus();
+            return;
+        }
+
+        // Prevent unrealistic values
+        if (quantity > 1_000) {
+            quantityInput.setError("Quantity is too large!");
+            quantityInput.requestFocus();
             return;
         }
 
         // Validate unit
         if (unit.isEmpty()) {
             unitInput.setError("Enter a unit!");
+            unitInput.requestFocus();
             return;
         }
 
-        // Convert quantity from String to double
-        try {
-            quantity = Double.parseDouble(quantityText);
-        } catch (NumberFormatException e) {
-            quantityInput.setError("Enter a valid number!");
+        if (unit.length() > 20) {
+            unitInput.setError("Unit is too long!");
+            unitInput.requestFocus();
             return;
         }
 
-        // Make sure quantity is positive
-        if (quantity <= 0) {
-            quantityInput.setError("Quantity must be greater than 0!");
-            return;
-        }
         if (editMode) {
             int result = dbHelper.updatePantryItem(itemId, name, quantity, unit, expiryDate);
 
             if (result > 0) {
                 finish();
             }
+
         } else {
             long result = dbHelper.addPantryItem(name, quantity, unit, expiryDate);
+
             if (result != -1) {
                 finish();
             }
         }
     }
+
 }

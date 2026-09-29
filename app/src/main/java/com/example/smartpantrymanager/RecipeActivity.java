@@ -10,9 +10,13 @@ import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
+
     private TextView recipeName;
+
     private TextView recipeIngredients;
+
     private TextView recipeInstructions;
+
     private TextView backRecipeBtn;
 
     @Override
@@ -31,9 +35,11 @@ public class RecipeActivity extends AppCompatActivity {
 
         int recipeId = getIntent().getIntExtra("recipeId", -1);
 
-        if (recipeId != -1) {
-            loadRecipe(recipeId);
+        if (recipeId <= 0) {
+            finish();
+            return;
         }
+        loadRecipe(recipeId);
     }
 
     private void loadRecipe(int recipeId) {
@@ -47,6 +53,11 @@ public class RecipeActivity extends AppCompatActivity {
         recipeInstructions.setText(recipe.getPreparation());
 
         List<RecipeIngredient> ingredients = dbHelper.getRecipeIngredients(recipeId);
+
+        if (ingredients == null || ingredients.isEmpty()) {
+            recipeIngredients.setText("No ingredients available!");
+            return;
+        }
 
         StringBuilder ingredientText = new StringBuilder();
 

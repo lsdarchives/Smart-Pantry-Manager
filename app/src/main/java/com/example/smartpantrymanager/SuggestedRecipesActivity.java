@@ -14,8 +14,11 @@ import java.util.List;
 
 public class SuggestedRecipesActivity extends AppCompatActivity {
     private RecyclerView recyclerRecipes;
+
     private TextView emptyRecipesText;
+
     private DatabaseHelper dbHelper;
+
     private RecipeAdapter adapter;
 
     @Override
@@ -34,32 +37,31 @@ public class SuggestedRecipesActivity extends AppCompatActivity {
     }
 
     private void loadSuggestedRecipes() {
-
         List<PantryItem> pantryItems = dbHelper.getAllPantryItems();
         List<Recipe> recipes = dbHelper.getAllRecipes();
 
-        List<Recipe> matchingRecipes =
-                RecipeMatcher.findMatchingRecipes(
-                        recipes,
-                        pantryItems,
-                        dbHelper
-                );
+        if (pantryItems == null) {
+            pantryItems = new java.util.ArrayList<>();
+        }
 
-        if (matchingRecipes.isEmpty()) {
-
+        if (recipes == null || recipes.isEmpty()) {
             recyclerRecipes.setVisibility(RecyclerView.GONE);
             emptyRecipesText.setVisibility(TextView.VISIBLE);
+            emptyRecipesText.setText("No recipes are available right now.");
+            return;
+        }
 
+        List<Recipe> matchingRecipes = RecipeMatcher.findMatchingRecipes(recipes, pantryItems, dbHelper);
+
+        if (matchingRecipes == null || matchingRecipes.isEmpty()) {
+            recyclerRecipes.setVisibility(RecyclerView.GONE);
+            emptyRecipesText.setVisibility(TextView.VISIBLE);
+            emptyRecipesText.setText("No recipes can be made with your current pantry.");
         } else {
-
             recyclerRecipes.setVisibility(RecyclerView.VISIBLE);
             emptyRecipesText.setVisibility(TextView.GONE);
 
-            adapter = new RecipeAdapter(
-                    this,
-                    matchingRecipes,
-                    dbHelper
-            );
+            adapter = new RecipeAdapter(this, matchingRecipes, dbHelper);
 
             recyclerRecipes.setAdapter(adapter);
         }

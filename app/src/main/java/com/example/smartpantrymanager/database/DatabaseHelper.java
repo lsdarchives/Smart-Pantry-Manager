@@ -370,13 +370,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    private void addRecipeWithIngredients(
-            SQLiteDatabase db,
-            String name,
-            String preparation,
-            String[] ingredientNames,
-            double[] quantities,
-            String[] units) {
+    private void addRecipeWithIngredients(SQLiteDatabase db, String name, String preparation, String[] ingredientNames, double[] quantities, String[] units) {
 
         ContentValues recipeValues = new ContentValues();
 
@@ -401,15 +395,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.insert("RECIPE_INGREDIENTS", null, ingredientValues);
         }
     }
-    public long addPantryItem(String name, double quantity, String unit, String expiryDate){
+
+    public long addPantryItem(String name, double quantity, String unit, String expiryDate) {
+        if (name == null || name.trim().isEmpty()) {
+            return -1;
+        }
+        if (unit == null || unit.trim().isEmpty()) {
+            return -1;
+        }
+        if (quantity <= 0 || Double.isNaN(quantity) || Double.isInfinite(quantity)) {
+            return -1;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put("name", name);
-        values.put("quantity",quantity);
-        values.put("unit",unit);
-        values.put("expiryDate",expiryDate);
+        values.put("name", name.trim());
+        values.put("quantity", quantity);
+        values.put("unit", unit.trim());
+
+        if (expiryDate == null || expiryDate.trim().isEmpty()) {
+            values.putNull("expiryDate");
+        } else {
+            values.put("expiryDate", expiryDate.trim());
+        }
+
         return db.insert("PANTRY", null, values);
     }
 
@@ -457,17 +468,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return item;
     }
 
-    public int updatePantryItem(int id, String name, double quantity, String unit, String expiryDate){
+    public int updatePantryItem(int id, String name, double quantity, String unit, String expiryDate) {
+        if (id <= 0) {
+            return 0;
+        }
+        if (name == null || name.trim().isEmpty()) {
+            return 0;
+        }
+        if (unit == null || unit.trim().isEmpty()) {
+            return 0;
+        }
+        if (quantity <= 0 || Double.isNaN(quantity) || Double.isInfinite(quantity)) {
+            return 0;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put("name", name);
+        values.put("name", name.trim());
         values.put("quantity", quantity);
-        values.put("unit", unit);
-        values.put("expiryDate", expiryDate);
+        values.put("unit", unit.trim());
 
-        return db.update("PANTRY",values,"id = ?", new String[]{String.valueOf(id)});
+        if (expiryDate == null || expiryDate.trim().isEmpty()) {
+            values.putNull("expiryDate");
+        } else {
+            values.put("expiryDate", expiryDate.trim());
+        }
+        return db.update("PANTRY", values, "id = ?", new String[]{String.valueOf(id)});
     }
 
     public int deletePantryItem(int id){
@@ -523,6 +551,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Recipe getRecipeById(int id) {
+        if (id <= 0) {
+            return null;
+        }
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM RECIPES WHERE id = ?", new String[]{String.valueOf(id)});

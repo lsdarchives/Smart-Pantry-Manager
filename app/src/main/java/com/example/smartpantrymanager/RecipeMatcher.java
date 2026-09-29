@@ -11,12 +11,26 @@ public class RecipeMatcher {
     public static List<Recipe> findMatchingRecipes(List<Recipe> recipes, List<PantryItem> pantryItems, DatabaseHelper dbHelper) {
         List<Recipe> matchingRecipes = new ArrayList<>();
 
+        if (recipes == null || recipes.isEmpty() || pantryItems == null || dbHelper == null) {
+            return matchingRecipes;
+        }
+
         for (Recipe recipe : recipes) {
+            if (recipe == null || recipe.getId() <= 0) {
+                continue;
+            }
             List<RecipeIngredient> requiredIngredients = dbHelper.getRecipeIngredients(recipe.getId());
 
+            if (requiredIngredients == null || requiredIngredients.isEmpty()) {
+                continue;
+            }
             boolean canMakeRecipe = true;
 
             for (RecipeIngredient required : requiredIngredients) {
+                if (required == null || required.getIngredientName() == null || required.getIngredientName().trim().isEmpty() || required.getUnit() == null || required.getUnit().trim().isEmpty() || required.getRequiredQuantity() <= 0) {
+                    canMakeRecipe = false;
+                    break;
+                }
                 double availableQuantity = getAvailableQuantity(required.getIngredientName(), required.getUnit(), pantryItems);
                 double requiredQuantity = convertToBaseQuantity(required.getRequiredQuantity(), required.getUnit());
 
@@ -33,34 +47,49 @@ public class RecipeMatcher {
     }
 
     private static double getAvailableQuantity(String requiredName, String requiredUnit, List<PantryItem> pantryItems) {
+        if (pantryItems == null || pantryItems.isEmpty()) {
+            return 0;
+        }
+        if (requiredName == null || requiredName.trim().isEmpty() || requiredUnit == null || requiredUnit.trim().isEmpty()) {
+            return 0;
+        }
+
         String normalizedName = normalizeIngredientName(requiredName);
         String requiredCategory = getUnitCategory(requiredUnit);
 
         double totalAvailable = 0;
 
         for (PantryItem item : pantryItems) {
+            if (item == null || item.getName() == null || item.getUnit() == null || item.getName().trim().isEmpty() || item.getUnit().trim().isEmpty() || item.getQuantity() <= 0) {
+                continue;
+            }
             if (!normalizeIngredientName(item.getName()).equals(normalizedName)) {
                 continue;
             }
             if (!getUnitCategory(item.getUnit()).equals(requiredCategory)) {
                 continue;
             }
-
             totalAvailable += convertToBaseQuantity(item.getQuantity(), item.getUnit());
         }
         return totalAvailable;
     }
-
     private static String normalizeIngredientName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return "";
+        }
+
         String normalized = name.toLowerCase().trim();
 
         if (normalized.endsWith("ies")) {
             normalized = normalized.substring(0, normalized.length() - 3) + "y";
+
         } else if (normalized.endsWith("oes")) {
             normalized = normalized.substring(0, normalized.length() - 2);
+
         } else if (normalized.endsWith("s") && !normalized.endsWith("ss")) {
             normalized = normalized.substring(0, normalized.length() - 1);
         }
+
         return normalized;
     }
 
